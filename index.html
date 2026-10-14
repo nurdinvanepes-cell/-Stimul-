@@ -823,5 +823,33 @@ function toggleFaq(el) {
   item.classList.toggle('open');
 }
 </script>
+  
+<!-- Meta Pixel: WhatsApp Click Tracking -->
+<script>
+document.addEventListener('click', function(event) {
+  const link = event.target.closest('a[href]');
+
+  if (!link) return;
+
+  try {
+    const url = new URL(link.href);
+    const host = url.hostname.toLowerCase();
+
+    const isWhatsApp =
+      host === 'wa.me' ||
+      host === 'api.whatsapp.com' ||
+      host === 'web.whatsapp.com' ||
+      host === 'chat.whatsapp.com';
+
+    if (isWhatsApp && typeof fbq === 'function') {
+      fbq('track', 'Contact');
+    }
+  } catch (error) {
+    // Ignore invalid links
+  }
+});
+</script>
+<!-- End WhatsApp Click Tracking -->
+
 </body>
 </html>
